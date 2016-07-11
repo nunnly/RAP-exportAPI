@@ -6,5 +6,5 @@
 4. 打开 localhost:3001
 
 ### TODO
-[] rapapi.net 官网导出支持
-[] markdown 模板支持
+- [ ] rapapi.net 官网导出支持
+- [ ] markdown 模板支持
