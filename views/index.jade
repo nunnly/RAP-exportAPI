@@ -26,6 +26,7 @@ block content
         input(type='radio',value='preview',v-model="type")
         span 预览 文件
     hr
-    a(v-on:click="doclick",href="javascript:void(0)", download,target="_blank").btn.btn-primary 确定导出
+    a(v-on:click="doclick",href="javascript:void(0)",target="_blank").btn.btn-primary.user-btn 下载
+    a(v-on:click="doclick", href = "javascript:void(0)", download, target = "_blank").user-btn.btn.btn-primary 预览
   script(src='/javascripts/index.js')
 

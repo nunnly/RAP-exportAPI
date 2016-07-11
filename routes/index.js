@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
+var jade = require('jade');
+var path = require('path');
 var MarkdownIt = require('markdown-it'),
     md = new MarkdownIt();
-var md2 = require('markdown-styles');
 var path = require('path');
 var fs = require('fs');
 function tableLine(target,data,pre){
@@ -13,6 +14,24 @@ function tableLine(target,data,pre){
       tableLine(target,val,pre + '- ');
     });
   }
+}
+function getMethod(num){
+  var method;
+  switch (parseInt(num)){
+    case 1:
+      method = 'GET';
+      break;
+    case 2:
+      method = 'POST';
+      break;
+    case 3:
+      method = 'PUT';
+      break;
+    case 4:
+      method = 'DELETE';
+      break;
+  }
+  return method
 }
 function parseToMarkDown(data){
 
@@ -29,7 +48,7 @@ function parseToMarkDown(data){
       page.actionList.forEach(function(action){
         md.push('#### 接口名称:' + action.name);
         md.push('- 接口地址:' + action.requestUrl);
-        md.push('- 接口类型:' + action.requestType);
+        md.push('- 接口类型:' + getMethod(action.requestType));
         md.push('- 接口描述:' + action.description);
         md.push('##### 请求参数列表:' )
         md.push('| 参数列表 | 参数名称 | 参数类型 |')
@@ -63,7 +82,7 @@ router.get('/getAPI/:type/:id', function(req,res){
   database.query('SELECT name,project_data FROM tb_project WHERE id ='+ id).spread(function(result){
     var a = (new Function('return ('+result[0].project_data+')'))();
     var projectName = result[0].name;
-    var pre='<!DOCTYPE html><html lang="zh-cn"><head><title>'+projectName+'</title></head><body><div class="markdown-body"><link rel="stylesheet" href="/stylesheets/markdown.css">';
+    var pre='<!DOCTYPE html><html lang="zh-cn"><head><title>'+projectName+'</title></head><body><div class="markdown-body">';
     var end = '</div></body></html>';
     if(queryType == 'markdown'){
       res.set({
@@ -74,9 +93,11 @@ router.get('/getAPI/:type/:id', function(req,res){
     }else if(queryType === 'json'){
       res.send(a);
     }else if(queryType === 'html'){
-      res.render('preview',{data:parseToMarkDown(a)})
+      var style = '<style>' + fs.readFileSync(path.join(__dirname + '/../public/stylesheets/markdown.css')) + '</style>';
+      res.send(pre + style + md.render(parseToMarkDown(a)) + end);
     }else{
-      res.send(pre + md.render(parseToMarkDown(a)) + end);
+      var style = '<style>' + fs.readFileSync(path.join(__dirname + '/../public/stylesheets/markdown.css')) + '</style>';
+      res.send(pre + style + md.render(parseToMarkDown(a)) + end);
     }
   })
 });

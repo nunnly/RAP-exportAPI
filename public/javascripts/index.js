@@ -3,7 +3,7 @@
         el: '#form',
         data: {
             projectId: '2',
-            type: 'html'
+            type: 'preview'
         },
         methods:{
             doclick: function(e){
