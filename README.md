@@ -6,6 +6,8 @@
 4. 打开 localhost:3001
 
 ![首页](public/images/index.png)
+
+
 ![预览](public/images/detail.png)
 
 ### TODO

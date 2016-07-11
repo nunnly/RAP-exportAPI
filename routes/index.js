@@ -96,8 +96,7 @@ router.get('/getAPI/:type/:id', function(req,res){
       var style = '<style>' + fs.readFileSync(path.join(__dirname + '/../public/stylesheets/markdown.css')) + '</style>';
       res.send(pre + style + md.render(parseToMarkDown(a)) + end);
     }else{
-      var style = '<style>' + fs.readFileSync(path.join(__dirname + '/../public/stylesheets/markdown.css')) + '</style>';
-      res.send(pre + style + md.render(parseToMarkDown(a)) + end);
+      res.send(666)
     }
   })
 });
