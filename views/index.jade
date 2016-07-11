@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  h1 选择导出API文档的项目
+  hr
+  #form.container
+    h3 选择项目名称
+    - for(var i=0;i<data.length;++i){
+      div.radio
+        label.radio-inline
+          input(type='radio',name='id',value='#{data[i].id}',v-model="projectId")
+          span #{data[i].name}
+    - }
+    h3 选择下载文件类型
+    div.radio
+      label.radio-inline
+        input(type='radio',value='json',v-model="type")
+        span json 文件
+      label.radio-inline
+        input(type='radio',value='html',v-model="type")
+        span html 文件
+      label.radio-inline
+        input(type='radio',value='markdown',v-model="type")
+        span markdown 文件
+      label.radio-inline
+        input(type='radio',value='preview',v-model="type")
+        span 预览 文件
+    hr
+    a(v-on:click="doclick",href="javascript:void(0)", download,target="_blank").btn.btn-primary 确定导出
+  script(src='/javascripts/index.js')
+
