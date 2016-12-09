@@ -8,7 +8,7 @@ block content
     - for(var i=0;i<data.length;++i){
       div.radio
         label.radio-inline
-          input(type='radio',name='id',value='#{data[i].id}',v-model="projectId")
+          input(type='radio',name='id',value=data[i].id,v-model="projectId")
           span #{data[i].name}
     - }
     h3 选择下载文件类型
