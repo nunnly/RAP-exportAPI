@@ -8,7 +8,8 @@ var path = require('path');
 var fs = require('fs');
 function tableLine(target,data,pre){
   var fg = '  \t|\t  ';
-  target.push('| ' + pre + data.identifier.replace(/\|+./,'')+ fg+ data.name + fg + data.dataType + '  |');
+  var identifier = data.identifier.match(/[^|]+/)[0];
+  target.push('| ' + pre + identifier+ fg+ data.name + fg + data.dataType + '  |');
   if(/array/.test(data.dataType)){
     data.parameterList.forEach(function(val){
       tableLine(target,val,pre + '- ');
